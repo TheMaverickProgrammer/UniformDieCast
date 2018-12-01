@@ -7,15 +7,15 @@ Useful for statistics or table top RPG simulations.
 die::die_cast result = die::cast<int N, int M>();
 ```
 
-Rolls an _M_ sided die _N_ times 
+Rolls an _M_ sided die _N_ times. 
+
+The signature comes from the common convention "3D8" meaning "roll an 8 sided dice 3 times". Hence _M_ and _N_ are reversed.
 
 # Throws
 
-Both _M_ and _N_ must be greater than or equal to 1 otherwise an instance of `std::invalid_argument` is thrown.
+Both _N_ and _M_ must be greater than or equal to 1 otherwise an instance of `std::invalid_argument` is thrown.
 
 # Modifiers
-
-The signature comes from the common convention "3D8" meaning "roll an 8 sided dice 3 times"
 
 What about something like "2D20-4" or "1D8+10"?
 
