@@ -78,14 +78,6 @@ int main() {
         
         std::cout << " => " << i.result << std::endl;
     }
-
-    std::cout << "\nResults only:" << std::endl;
-    
-    // Dissolve into integer result set only
-    // if you just want the final value
-    for(auto& i : res) {
-        std::cout << "Final value: " << i << std::endl;
-    }
 }
 
 /*
@@ -100,12 +92,5 @@ Rolled a 6 sided die 2 times! => 3
 Rolled a 6 sided die 3 times! => 1
 Rolled a 8 sided die 1 time  with a modifier of 10! => 17
 Rolled a 8 sided die 2 times with a modifier of 10! => 14
-
-Results only:
-Final value: 5
-Final value: 3
-Final value: 1
-Final value: 17
-Final value: 14
 */
 ```
