@@ -1,3 +1,5 @@
+Update: due to feedback about compile-time limitations, the api will be updated to this shortly: ```die::cast(int rolls, int sides, int modifier=0)```
+
 # UniformDieCast
 Provides chainable and iterable object for uniformly distributed die casts. 
 Useful for statistics or table top RPG simulations.
