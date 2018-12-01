@@ -1,6 +1,7 @@
 #include <vector>
 #include <random>
-
+#include <stdexcept>
+ 
 /*
 Author: TheMaverickProgrammer
 Date: 11/30/2018
@@ -47,6 +48,14 @@ namespace die {
         // Chain function is same signature as static call
         template<int rolls, int sides>
         auto cast(int modifier=0) {
+            if(rolls < 1) {
+                throw std::invalid_argument("die::die_cast number of rolls must be at least 1");
+            }
+            
+           if(sides < 1) {
+                throw std::invalid_argument("die::die_cast number of sides must be at least 1");
+            }
+            
             for(int i = 0; i < rolls; i++) {
                 std::random_device rand_dev;
                 std::mt19937 generator(rand_dev());
