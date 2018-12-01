@@ -9,7 +9,7 @@ die::die_cast result = die::cast<int N, int M>();
 
 Rolls an _M_ sided die _N_ times. 
 
-The signature comes from the common convention "3D8" meaning "roll an 8 sided dice 3 times". Hence _M_ and _N_ are reversed.
+The signature comes from the common convention "3D8" meaning "roll an 8 sided dice 3 times". Hence _N_ and _M_ are reversed.
 
 # Throws
 
