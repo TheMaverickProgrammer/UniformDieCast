@@ -46,10 +46,8 @@ for(auto& i : res) {
 You can copy the result list for dynamic lookups like so:
 
 ```cpp
-auto result = die::cast<3, 5>(+1);
-
 // only the final results dissolve into a vector
-std::vector<int> final_values = result;
+std::vector<int> final_values = die::cast<3, 5>(+1);
 ```
 
 # More info
