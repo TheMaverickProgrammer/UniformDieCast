@@ -30,9 +30,20 @@ one the `die_cast` object. The object stores each roll in an internal list.
 Here's how to fetch the result:
 
 ```cpp
+auto result = die::cast<4, 6>();
+
 for(auto& i : res) {
     std::cout << "Final value: " << i << std::endl;
 }
+```
+
+You can copy the result list for dynamic lookups like so:
+
+```cpp
+auto result = die::cast<3, 5>(+1);
+
+// only the final results dissolve into a vector
+std::vector<int> final_values = result;
 ```
 
 # More info
