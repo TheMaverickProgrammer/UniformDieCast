@@ -11,7 +11,7 @@ Rolls an _M_ sided die _N_ times
 
 # Throws
 
-Both _M_ and _N_ must be greater than or equal to 1 otherwise an instance of `std::invalid_argument' is thrown.
+Both _M_ and _N_ must be greater than or equal to 1 otherwise an instance of `std::invalid_argument` is thrown.
 
 # Modifiers
 
