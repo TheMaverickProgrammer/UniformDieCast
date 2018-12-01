@@ -9,6 +9,10 @@ die::die_cast result = die::cast<int N, int M>();
 
 Rolls an _M_ sided die _N_ times 
 
+The signature comes from the common convention "3D8" meaning "roll an 8 sided dice 3 times"
+
+What about something like "2D20-4" or "1D8+10"?
+
 To add modifiers to a roll, supply the modifier as an additional argument like so:
 
 ```cpp
@@ -16,12 +20,14 @@ auto result = die::cast<2, 20>(-4).cast<1, 8>(+10);
 ```
 
 Rolls a 20 sided die 2 times and subtracts 4 from each result in the group.
+
 Then it rolls an 8 sided die once and adds 10 to the result;
 
 # Iterable
 You can keep chaining the cast function for complex rolls or invoke them independantly
-one the `die_cast` object. The object stores each roll in an internal list. Here's how 
-to fetch the result:
+one the `die_cast` object. The object stores each roll in an internal list. 
+
+Here's how to fetch the result:
 
 ```cpp
 for(auto& i : res) {
