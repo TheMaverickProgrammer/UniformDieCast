@@ -7,7 +7,7 @@ int main() {
     // Roll a 6 sided die 3 times 
     // Roll a 8 sided die 2 times and then add 10 to the result
     // e.g. roll 3D6 2D8+10
-    auto res = die::cast<3,6>().cast<2,8>(+10);
+    auto res = die::cast(3,6).cast(2,8,+10);
 
     // iterable die_cast_info object can tell you
     // the following properties about a roll:
