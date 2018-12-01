@@ -35,22 +35,29 @@ Then it rolls an 8 sided die once and adds 10 to the result;
 
 # Iterable
 You can keep chaining the cast function for complex rolls or invoke them independantly
-one the `die_cast` object. The object stores each roll in an internal list. 
-
-Here's how to fetch the result:
+on the `die_cast` object. The object stores each roll in an internal list. 
 
 ```cpp
-die::die_cast result = die::cast(4, 6);
+die::die_cast chain = die::cast(10, 6).cast(1, 20).cast(3, 4).cast(1, 8);
+```
 
-for(auto& i : res) {
+Here's how to fetch the result set:
+
+```cpp
+for(auto& i : chain) {
     std::cout << "Final value: " << i << std::endl;
 }
 ```
 
-You can copy the result list for dynamic lookups like so:
+You can copy the result sets for dynamic lookups like so:
 
 ```cpp
-// only the final results dissolve into a vector
+// copy from the info list. only the final result set dissolves into a vector.
+std::vector<int> final_values = chain;
+
+...
+
+// direct assignment 
 std::vector<int> final_values = die::cast(3, 5, +1);
 ```
 
