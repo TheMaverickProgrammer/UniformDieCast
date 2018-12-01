@@ -1,4 +1,6 @@
-Update: due to feedback about compile-time limitations, the api will be updated to this shortly: ```die::cast(int rolls, int sides, int modifier=0)```
+12/1/2018
+
+Due to feedback about compile-time limitations, the api has been changed since release
 
 # UniformDieCast
 Provides chainable and iterable object for uniformly distributed die casts. 
@@ -6,7 +8,7 @@ Useful for statistics or table top RPG simulations.
 
 # Signature
 ```cpp
-die::die_cast result = die::cast<int N, int M>();
+die::die_cast result = die::cast(int N, int M);
 ```
 
 Rolls an _M_ sided die _N_ times. 
@@ -24,7 +26,7 @@ What about something like "2D20-4" or "1D8+10"?
 To add modifiers to a roll, supply the modifier as an additional argument like so:
 
 ```cpp
-auto result = die::cast<2, 20>(-4).cast<1, 8>(+10);
+auto result = die::cast(2, 20, -4).cast(1, 8, +10);
 ```
 
 Rolls a 20 sided die 2 times and subtracts 4 from each result in the group.
@@ -38,7 +40,7 @@ one the `die_cast` object. The object stores each roll in an internal list.
 Here's how to fetch the result:
 
 ```cpp
-die::die_cast result = die::cast<4, 6>();
+die::die_cast result = die::cast(4, 6);
 
 for(auto& i : res) {
     std::cout << "Final value: " << i << std::endl;
@@ -49,7 +51,7 @@ You can copy the result list for dynamic lookups like so:
 
 ```cpp
 // only the final results dissolve into a vector
-std::vector<int> final_values = die::cast<3, 5>(+1);
+std::vector<int> final_values = die::cast(3, 5, +1);
 ```
 
 # More info
@@ -67,7 +69,7 @@ int main() {
     // Roll a 6 sided die 3 times 
     // Roll a 8 sided die 2 times and then add 10 to the result
     // e.g. roll 3D6 2D8+10
-    auto res = die::cast<3,6>().cast<2,8>(+10);
+    auto res = die::cast(3,6).cast(2,8,+10);
 
     // iterable die_cast_info object can tell you
     // the following properties about a roll:
