@@ -1,6 +1,6 @@
 # UniformDieCast
 Provides chainable and iterable object for uniformly distributed die casts. 
-Useful for stastics or table top RPG simulations.
+Useful for statistics or table top RPG simulations.
 
 # Signature
 ```cpp
@@ -8,6 +8,12 @@ die::die_cast result = die::cast<int N, int M>();
 ```
 
 Rolls an _M_ sided die _N_ times 
+
+# Throws
+
+Both _M_ and _N_ must be greater than or equal to 1 otherwise an instance of `std::invalid_argument' is thrown.
+
+# Modifiers
 
 The signature comes from the common convention "3D8" meaning "roll an 8 sided dice 3 times"
 
