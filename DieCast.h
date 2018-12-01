@@ -1,7 +1,7 @@
 #include <vector>
 #include <random>
 #include <stdexcept>
- 
+
 /*
 Author: TheMaverickProgrammer
 Date: 11/30/2018
@@ -9,14 +9,16 @@ Description:
 
 die:: namespace has a function `cast<int rolls, int sides>(int modifier)`
 that returns an iterable die_cast object that can chain multiple `cast()` calls.
+
+The object can be directly used in a for-each loop. See accompanying README for examples.
 */
 
 namespace die {
     struct die_cast_info {
-        const int result;
-        const int sides;
-        const int roll;
-        const int modifier;
+        int result;
+        int sides;
+        int roll;
+        int modifier;
 
         // dissolves into result for ease of use
         operator int() { return result; }
@@ -24,6 +26,17 @@ namespace die {
 
     struct die_cast {
         public:
+
+        /* constructor needed to construct random device and generator */
+        die_cast() : generator(rand_dev()) { ; }
+        
+        /* custom copy needed because random devices are non copyable */
+        die_cast(const die_cast& rhs) {
+            rand_dev();
+            generator = rhs.generator;
+            list = rhs.list;
+        }
+
         /* short hand iterable keywords */
         typedef die_cast_info* iterator;
         typedef const die_cast_info* const_iterator;
@@ -40,14 +53,23 @@ namespace die {
         bool operator!=(die_cast rhs) { return iter != rhs.iter;  }
 
         private:
+        /*
+        internals for iteration
+        */
         std::vector<die_cast_info> list;
         iterator iter;
 
+        /*
+        internals for rand
+        */
+        std::random_device rand_dev;
+        std::mt19937 generator;
+
         public:
 
-        // Chain function is same signature as static call
-        template<int rolls, int sides>
-        auto cast(int modifier=0) {
+        /* Chain function is same signature as static calls */
+        die_cast& cast(int rolls, int sides, int modifier=0) {
+
             if(rolls < 1) {
                 throw std::invalid_argument("die::die_cast number of rolls must be at least 1");
             }
@@ -56,11 +78,14 @@ namespace die {
                 throw std::invalid_argument("die::die_cast number of sides must be at least 1");
             }
             
-            for(int i = 0; i < rolls; i++) {
-                std::random_device rand_dev;
-                std::mt19937 generator(rand_dev());
-                std::uniform_int_distribution<int> distr(1, sides);
+            /*
+             API allows for any type of die to be rolled in sequence
+             and must create new distribution each time
+            */
 
+            std::uniform_int_distribution<int> distr(1, sides);
+            
+            for(int i = 0; i < rolls; i++) {
                 list.push_back(die_cast_info({distr(generator)+modifier, sides, i+1, modifier}));
             }
 
@@ -80,9 +105,8 @@ namespace die {
     };
 
     // primary call
-    template<int rolls, int sides>
-    static auto cast(int modifier=0) {
+    static auto cast(int rolls, int sides, int modifier=0) {
         die_cast res;
-        return res.cast<rolls, sides>(modifier);
+        return res.cast(rolls, sides, modifier);
     }
 };
