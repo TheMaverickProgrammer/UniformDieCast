@@ -4,7 +4,7 @@ Useful for stastics or table top RPG simulations.
 
 # Signature
 ```cpp
-die_cast result = die::cast<int N, int M>();
+die::die_cast result = die::cast<int N, int M>();
 ```
 
 Rolls an _M_ sided die _N_ times 
