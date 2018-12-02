@@ -9,9 +9,21 @@ Provides chainable and iterable object for uniformly distributed die casts.
 Useful for statistics or table top RPG simulations.
 
 # Signature
+
+## Literal Notation
+(humand readable)
+
 ```cpp
 using namespace die::literal;
 die::die_cast result = #N_D(int M);
+```
+
+## Regular Notation
+(applicable for run-time)
+See [Example.cpp](https://github.com/TheMaverickProgrammer/UniformDieCast/blob/master/Example.cpp)
+
+```cpp
+die::die_cast result = die::cast(int N, int M, int modifier=0);
 ```
 
 Rolls an _M_ sided die _N_ number of times 
