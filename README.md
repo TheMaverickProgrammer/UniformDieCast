@@ -1,6 +1,7 @@
 12/1/2018
 
 Due to feedback about compile-time limitations, the api has been changed since release.
+
 The api now supports user-defined literals which makes the coding experience even more intuitive.
 
 # UniformDieCast
