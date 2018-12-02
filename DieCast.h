@@ -7,13 +7,19 @@ Author: TheMaverickProgrammer
 Date: 11/30/2018
 Description:
 
-die:: namespace has a function `cast<int rolls, int sides>(int modifier)`
+die:: namespace has a function `cast(int rolls, int sides, int modifier)`
 that returns an iterable die_cast object that can chain multiple `cast()` calls.
-
 The object can be directly used in a for-each loop. See accompanying README for examples.
+
+die::literal:: namespace exports a user-defined literal "# of rolls"_D(int sides) 
+and has an object that exploits basic addition and concatenation operators to be human readable.
 */
 
-namespace die {
+namespace die {    
+    namespace literal {
+        class die_cast_facade; /* forward decl */
+    }
+
     struct die_cast_info {
         int result;
         int sides;
@@ -25,6 +31,8 @@ namespace die {
     };
 
     struct die_cast {
+        friend class literal::die_cast_facade;
+
         public:
 
         /* constructor needed to construct random device and generator */
@@ -109,4 +117,59 @@ namespace die {
         die_cast res;
         return res.cast(rolls, sides, modifier);
     }
+
+    namespace literal {
+        /* Goal: achieve the following syntax
+            die_cast res = 3_D(10)+4 << 3_D10 << ... ;
+        */
+
+        class die_cast_facade {
+            die_cast internal;
+
+            public:
+            /* assignment to die_cast */
+            die_cast_facade(const die_cast& rhs) {
+                internal.list = rhs.list;
+            }
+
+            /* dissolve into original object */
+            operator die_cast() { return internal; }
+
+            /* add modifier */
+            die_cast_facade& operator+(int modifier) {
+                for(auto& i : internal) {
+                    i.modifier = modifier;
+                    i.result += modifier;
+                }
+                
+                return *this;
+            }
+           
+            /* sub modifier */ 
+            die_cast_facade& operator-(int modifier) {
+                for(auto& i : internal) {
+                    i.modifier = -modifier;
+                    i.result -= modifier;
+                }
+                
+                return *this;
+            }
+
+            /* allow concatenation */
+            die_cast_facade& operator<<(const die_cast_facade& rhs) {
+                internal.list.insert(internal.list.end(), rhs.internal.list.begin(), rhs.internal.list.end());
+                return *this;
+            }
+        };
+
+        /* user-defined string literal for intuitive experience */
+        auto operator "" _D(unsigned long long rolls) {
+            return [rolls](int sides) -> auto
+            { 
+                die_cast_facade proxy = cast((int)rolls, (int)sides);
+                return proxy;
+            };
+        }
+    }
+
 };
